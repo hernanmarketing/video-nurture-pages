@@ -7,7 +7,7 @@ Built for **Hernan Vazquez** / **Scale Driven**.
 ## Tech Stack
 
 - **Frontend**: Plain HTML, CSS, JS — no framework
-- **Backend**: FastAPI (Python, serverless on Vercel)
+- **Backend**: Next.js Pages Router API routes (serverless on Vercel)
 - **Database**: Neon Postgres (serverless PostgreSQL)
 - **Deployment**: Vercel
 
@@ -15,17 +15,25 @@ Built for **Hernan Vazquez** / **Scale Driven**.
 
 ```
 video-nurture-pages/
-├── api/
-│   └── index.py          # FastAPI app — tracking + stats endpoints
+├── pages/
+│   └── api/
+│       ├── track.js           # POST — record a page visit
+│       ├── click.js           # POST — record a CTA click
+│       ├── stats.js           # GET — aggregated analytics (password-protected)
+│       ├── stats/
+│       │   └── recent.js      # GET — recent visits (password-protected)
+│       └── health.js          # GET — health check
 ├── public/
-│   ├── index.html         # Overview page listing all video pages
-│   ├── low-ticket-book.html  # Video nurture page for Low Ticket Profits
-│   └── t.js               # Tracking beacon (deployed to /t.js)
+│   ├── index.html             # Overview page listing all video pages
+│   ├── low-ticket-book.html   # Video nurture page for Low Ticket Profits
+│   └── t.js                   # Tracking beacon (deployed to /t.js)
 ├── dashboard/
-│   └── index.html         # Password-protected analytics dashboard
-├── schema.sql             # Neon Postgres schema
-├── vercel.json            # Vercel deployment config
-├── requirements.txt       # Python dependencies
+│   └── index.html             # Password-protected analytics dashboard
+├── schema.sql                 # Neon Postgres schema
+├── vercel.json                # Vercel deployment config
+├── next.config.js             # Next.js configuration
+├── package.json               # Dependencies
+├── jsconfig.json              # Path aliases
 └── README.md
 ```
 
@@ -57,8 +65,15 @@ Set these in your Vercel project:
 ### 3. Deploy to Vercel
 
 ```bash
-npm i -g vercel
 vercel --prod
+```
+
+Or via git push (Vercel auto-deploy from GitHub):
+
+```bash
+git add -A
+git commit -m "Your message"
+git push origin main
 ```
 
 ### 4. Access the Dashboard

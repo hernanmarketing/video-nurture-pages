@@ -1,14 +1,10 @@
 {
-  "functions": {
-    "api/index.py": {}
-  },
   "rewrites": [
-    { "source": "/t.js", "destination": "/t.js" },
-    { "source": "/dashboard", "destination": "/dashboard/index.html" },
-    { "source": "/dashboard/", "destination": "/dashboard/index.html" },
+    { "source": "/", "destination": "/index.html" },
     { "source": "/low-ticket-book", "destination": "/low-ticket-book.html" },
     { "source": "/low-ticket-book/", "destination": "/low-ticket-book.html" },
-    { "source": "/api/(.*)", "destination": "/api/index.py" }
+    { "source": "/dashboard", "destination": "/dashboard/index.html" },
+    { "source": "/dashboard/", "destination": "/dashboard/index.html" }
   ],
   "headers": [
     {
