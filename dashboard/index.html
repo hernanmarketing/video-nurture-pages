@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Scale Driven — Analytics Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .dashboard { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    /* ── Header ──────────────────────────────────────── */
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .dash-header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .dash-header h1 em { color: #E41E1E; font-style: normal; }
+    .dash-header .last-updated {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── Controls ──────────────────────────────────────── */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+    .controls label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    .controls select, .controls button {
+      font-family: inherit;
+      font-size: 0.8rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: #e0e0e0;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .controls select:hover, .controls button:hover {
+      border-color: rgba(228,30,30,0.4);
+    }
+    .controls button.primary {
+      background: #E41E1E;
+      color: #fff;
+      border: none;
+      font-weight: 600;
+    }
+    .controls button.primary:hover {
+      background: #c41a1a;
+    }
+    .controls .refresh-btn {
+      margin-left: auto;
+    }
+
+    /* ── Toggle Switch ────────────────────────────────── */
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 36px;
+      height: 20px;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      transition: 0.2s;
+    }
+    .toggle .slider::before {
+      content: '';
+      position: absolute;
+      height: 14px; width: 14px;
+      left: 3px; bottom: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+    .toggle input:checked + .slider { background: #E41E1E; }
+    .toggle input:checked + .slider::before { transform: translateX(16px); }
+
+    /* ── Stats Grid ────────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+    .stat-card .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.3rem;
+    }
+    .stat-card .value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .stat-card .value.highlight { color: #E41E1E; }
+    .stat-card .sub {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      margin-top: 0.2rem;
+    }
+
+    /* ── Section Headers ──────────────────────────────── */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 2rem 0 1rem;
+    }
+    .section-header h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ── Table ──────────────────────────────────────────── */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    thead th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      white-space: nowrap;
+    }
+    tbody td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.7);
+      white-space: nowrap;
+    }
+    tbody tr:hover { background: rgba(255,255,255,0.02); }
+    tbody tr:last-child td { border-bottom: none; }
+    .country-flag { font-size: 1.1rem; }
+    .clicked-badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .clicked-badge.yes { background: rgba(34,197,94,0.15); color: #22c55e; }
+    .clicked-badge.no { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); }
+    .referrer-cell { max-width: 200px; overflow: hidden; text-overflow: ellipsis; }
+
+    /* ── Bar chart ──────────────────────────────────────── */
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding: 1rem 0;
+    }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .bar-label {
+      width: 160px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      text-align: right;
+      flex-shrink: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .bar-track {
+      flex: 1;
+      height: 24px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #9F1C1F, #E41E1E);
+      transition: width 0.4s ease;
+      min-width: 2px;
+    }
+    .bar-value {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      width: 48px;
+      text-align: left;
+      flex-shrink: 0;
+    }
+
+    /* ── Referrers ─────────────────────────────────────── */
+    .referrer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem 0;
+    }
+    .referrer-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+    }
+    .referrer-item .name {
+      color: rgba(255,255,255,0.5);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .referrer-item .count {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ── Error / Loading ─────────────────────────────── */
+    .error-msg {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #E41E1E;
+    }
+    .error-msg .icon { font-size: 3rem; margin-bottom: 1rem; }
+    .error-msg p { font-size: 1rem; }
+    .error-msg .detail { font-size: 0.85rem; color: rgba(255,255,255,0.4); margin-top: 0.5rem; }
+
+    .loading {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: rgba(255,255,255,0.3);
+    }
+    .loading .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-top-color: #E41E1E;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 0.75rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 600px) {
+      .dashboard { padding: 1rem 0.75rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .bar-label { width: 100px; font-size: 0.7rem; }
+      .controls { flex-direction: column; align-items: stretch; }
+      .controls .refresh-btn { margin-left: 0; }
+    }
+
+    /* Flag emoji helper */
+    .flag { font-size: 1.1rem; line-height: 1; }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Header -->
+    <div class="dash-header">
+      <h1>Scale Driven <em>Analytics</em></h1>
+      <span class="last-updated" id="lastUpdated">—</span>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <select id="pageFilter">
+        <option value="">All Pages</option>
+      </select>
+
+      <select id="periodFilter">
+        <option value="">All Time</option>
+        <option value="24h">Last 24 Hours</option>
+        <option value="7d">Last 7 Days</option>
+        <option value="30d">Last 30 Days</option>
+        <option value="90d">Last 90 Days</option>
+      </select>
+
+      <label>
+        <span style="font-size:0.75rem;">Filter bots</span>
+        <span class="toggle">
+          <input type="checkbox" id="botFilter" />
+          <span class="slider"></span>
+        </span>
+      </label>
+
+      <button class="primary refresh-btn" id="refreshBtn">⟳ Refresh</button>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="loading">
+      <div class="spinner"></div>
+      <p>Loading analytics…</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="error-msg hidden">
+      <div class="icon">⚠</div>
+      <p id="errorText">Failed to load analytics.</p>
+      <p class="detail" id="errorDetail"></p>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div id="dashContent" class="hidden">
+      <!-- Summary Stats -->
+      <div class="stats-grid" id="statsGrid"></div>
+
+      <!-- Views Per Page -->
+      <div class="section-header">
+        <h2>Views Per Page</h2>
+      </div>
+      <div id="viewsPerPage" class="bar-chart" style="border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:1rem;"></div>
+
+      <!-- Top Referrers -->
+      <div class="section-header">
+        <h2>Top Referrers</h2>
+      </div>
+      <div id="topReferrers" class="referrer-list" style="border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:1rem;"></div>
+
+      <!-- Recent Visits -->
+      <div class="section-header">
+        <h2>Recent Visits</h2>
+      </div>
+      <div class="table-wrap" id="recentTableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Page</th>
+              <th>Country</th>
+              <th>Referrer</th>
+              <th>Screen</th>
+              <th>Time on Page</th>
+              <th>Clicked</th>
+            </tr>
+          </thead>
+          <tbody id="recentBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // ── Config ────────────────────────────────────────
+      var API = '/api';
+      var password = new URLSearchParams(window.location.search).get('password') || '';
+
+      // ── DOM refs ──────────────────────────────────────
+      var $ = function (id) { return document.getElementById(id); };
+      var loadingEl = $('loadingState');
+      var errorEl = $('errorState');
+      var errorText = $('errorText');
+      var errorDetail = $('errorDetail');
+      var dashContent = $('dashContent');
+      var statsGrid = $('statsGrid');
+      var viewsPerPageEl = $('viewsPerPage');
+      var topReferrersEl = $('topReferrers');
+      var recentBody = $('recentBody');
+      var lastUpdatedEl = $('lastUpdated');
+      var pageFilter = $('pageFilter');
+      var periodFilter = $('periodFilter');
+      var botFilter = $('botFilter');
+      var refreshBtn = $('refreshBtn');
+
+      // ── Helpers ───────────────────────────────────────
+      function formatTime(iso) {
+        var d = new Date(iso);
+        var now = new Date();
+        var diff = (now - d) / 1000;
+        if (diff < 60) return 'just now';
+        if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+        if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+        return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+
+      function formatTimeOnPage(seconds) {
+        if (!seconds || seconds < 5) return '—';
+        if (seconds < 60) return seconds + 's';
+        var m = Math.floor(seconds / 60);
+        var s = seconds % 60;
+        return m + 'm ' + s + 's';
+      }
+
+      function getScreenLabel(w, h) {
+        if (!w || !h) return '—';
+        return w + '×' + h;
+      }
+
+      function getFlag(country) {
+        if (!country || country.length !== 2) return '🌐';
+        var code = country.toUpperCase().split('').map(function (c) {
+          return String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65);
+        }).join('');
+        return code;
+      }
+
+      function getSince() {
+        var val = periodFilter.value;
+        if (!val) return '';
+        var now = new Date();
+        var ms = 0;
+        switch (val) {
+          case '24h': ms = 24 * 60 * 60 * 1000; break;
+          case '7d': ms = 7 * 24 * 60 * 60 * 1000; break;
+          case '30d': ms = 30 * 24 * 60 * 60 * 1000; break;
+          case '90d': ms = 90 * 24 * 60 * 60 * 1000; break;
+        }
+        return new Date(now.getTime() - ms).toISOString();
+      }
+
+      // ── Fetch ─────────────────────────────────────────
+      function fetchJSON(url) {
+        return fetch(url, {
+          headers: { 'Accept': 'application/json' },
+        }).then(function (r) {
+          if (!r.ok) return r.json().then(function (e) { throw new Error(e.error || 'HTTP ' + r.status); });
+          return r.json();
+        });
+      }
+
+      function buildUrl(path, extra) {
+        var params = [];
+        if (password) params.push('password=' + encodeURIComponent(password));
+        var since = getSince();
+        if (since) params.push('since=' + encodeURIComponent(since));
+        if (botFilter.checked) params.push('filter_bots=1');
+        if (extra) {
+          Object.keys(extra).forEach(function (k) {
+            if (extra[k]) params.push(k + '=' + encodeURIComponent(extra[k]));
+          });
+        }
+        return path + (params.length ? '?' + params.join('&') : '');
+      }
+
+      // ── Render ────────────────────────────────────────
+      function renderStats(data) {
+        statsGrid.innerHTML =
+          '<div class="stat-card"><div class="label">Total Views</div><div class="value">' +
+          data.total_views + '</div></div>' +
+          '<div class="stat-card"><div class="label">Unique Visitors</div><div class="value">' +
+          data.unique_visitors + '</div></div>' +
+          '<div class="stat-card"><div class="label">Clicks</div><div class="value highlight">' +
+          data.total_clicks + '</div></div>' +
+          '<div class="stat-card"><div class="label">CTR</div><div class="value">' +
+          data.click_through_rate + '%</div></div>' +
+          '<div class="stat-card"><div class="label">Avg Time on Page</div><div class="value">' +
+          formatTimeOnPage(data.avg_time_on_page_seconds) + '</div></div>';
+      }
+
+      function renderViewsPerPage(data) {
+        var pages = data.views_per_page || [];
+        if (!pages.length) {
+          viewsPerPageEl.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.3);padding:2rem;">No data yet</div>';
+          return;
+        }
+        var maxViews = pages.reduce(function (m, p) { return Math.max(m, p.views); }, 1);
+        var html = '';
+        pages.forEach(function (p) {
+          var pct = (p.views / maxViews * 100).toFixed(0);
+          html += '<div class="bar-row">' +
+            '<span class="bar-label" title="' + escapeHtml(p.page) + '">' + escapeHtml(p.page) + '</span>' +
+            '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%"></div></div>' +
+            '<span class="bar-value">' + p.views + '</span>' +
+            '</div>';
+        });
+        viewsPerPageEl.innerHTML = html;
+      }
+
+      function renderReferrers(data) {
+        var refs = data.top_referrers || [];
+        if (!refs.length) {
+          topReferrersEl.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.3);padding:1rem;">No referrer data</div>';
+          return;
+        }
+        var maxCount = refs.reduce(function (m, r) { return Math.max(m, r.count); }, 1);
+        var html = '';
+        refs.forEach(function (r) {
+          var pct = (r.count / maxCount * 100).toFixed(0);
+          html += '<div class="referrer-item">' +
+            '<div class="name" title="' + escapeHtml(r.referrer) + '">' + escapeHtml(r.referrer) + '</div>' +
+            '<div style="flex:1;height:4px;background:rgba(255,255,255,0.05);border-radius:2px;max-width:100px;">' +
+            '<div style="height:100%;width:' + pct + '%;background:#E41E1E;border-radius:2px;"></div></div>' +
+            '<span class="count">' + r.count + '</span>' +
+            '</div>';
+        });
+        topReferrersEl.innerHTML = html;
+      }
+
+      function renderRecent(data) {
+        var visits = data.visits || [];
+        if (!visits.length) {
+          recentBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:rgba(255,255,255,0.3);padding:2rem;">No visits recorded yet</td></tr>';
+          return;
+        }
+        var html = '';
+        visits.forEach(function (v) {
+          html += '<tr>' +
+            '<td>' + formatTime(v.createdAt) + '</td>' +
+            '<td><span style="color:rgba(255,255,255,0.5);font-size:0.75rem;">' + escapeHtml(v.page) + '</span></td>' +
+            '<td><span class="flag">' + getFlag(v.country) + '</span></td>' +
+            '<td class="referrer-cell" title="' + escapeHtml(v.referrer || '') + '">' + escapeHtml(truncate(v.referrer || '(direct)', 30)) + '</td>' +
+            '<td>' + getScreenLabel(v.screenWidth, v.screenHeight) + '</td>' +
+            '<td>' + formatTimeOnPage(v.timeOnPageSeconds) + '</td>' +
+            '<td><span class="clicked-badge ' + (v.clicked ? 'yes' : 'no') + '">' + (v.clicked ? 'Yes' : 'No') + '</span></td>' +
+            '</tr>';
+        });
+        recentBody.innerHTML = html;
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function truncate(str, max) {
+        if (str.length <= max) return str;
+        return str.substring(0, max) + '…';
+      }
+
+      function updateLastUpdated() {
+        lastUpdatedEl.textContent = 'Updated ' + new Date().toLocaleTimeString();
+      }
+
+      function updatePageFilter(pages) {
+        var current = pageFilter.value;
+        pageFilter.innerHTML = '<option value="">All Pages</option>';
+        pages.forEach(function (p) {
+          var opt = document.createElement('option');
+          opt.value = p.page;
+          opt.textContent = p.page;
+          if (opt.value === current) opt.selected = true;
+          pageFilter.appendChild(opt);
+        });
+      }
+
+      // ── Load ──────────────────────────────────────────
+      function loadAll() {
+        loadingEl.classList.remove('hidden');
+        errorEl.classList.add('hidden');
+        dashContent.classList.add('hidden');
+
+        var pageVal = pageFilter.value;
+
+        Promise.all([
+          fetchJSON(buildUrl(API + '/stats', { page: pageVal })),
+          fetchJSON(buildUrl(API + '/stats/recent', { page: pageVal, limit: '100' })),
+        ]).then(function (results) {
+          var stats = results[0];
+          var recent = results[1];
+
+          loadingEl.classList.add('hidden');
+          dashContent.classList.remove('hidden');
+
+          renderStats(stats);
+          renderViewsPerPage(stats);
+          renderReferrers(stats);
+          renderRecent(recent);
+
+          if (stats.views_per_page) {
+            updatePageFilter(stats.views_per_page);
+          }
+
+          updateLastUpdated();
+        }).catch(function (err) {
+          loadingEl.classList.add('hidden');
+          errorEl.classList.remove('hidden');
+          if (err.message && err.message.indexOf('unauthorized') !== -1) {
+            errorText.textContent = 'Unauthorized — Invalid password';
+            errorDetail.textContent = 'Add ?password=YOUR_PASSWORD to the URL.';
+          } else if (err.message && err.message.indexOf('500') !== -1) {
+            errorText.textContent = 'Server error';
+            errorDetail.textContent = 'Check the backend logs. Database may not be configured.';
+          } else {
+            errorText.textContent = 'Failed to load analytics';
+            errorDetail.textContent = err.message || 'Unknown error';
+          }
+        });
+      }
+
+      // ── Init ──────────────────────────────────────────
+      // Show unauthorized message immediately if no password
+      if (!password) {
+        loadingEl.classList.add('hidden');
+        errorEl.classList.remove('hidden');
+        errorText.textContent = 'Password Required';
+        errorDetail.textContent = 'Add ?password=YOUR_PASSWORD to the URL to access the dashboard.';
+      } else {
+        loadAll();
+      }
+
+      // Refresh on button click
+      refreshBtn.addEventListener('click', loadAll);
+
+      // Refresh on filter change
+      pageFilter.addEventListener('change', loadAll);
+      periodFilter.addEventListener('change', loadAll);
+      botFilter.addEventListener('change', loadAll);
+
+      // Auto-refresh every 30 seconds
+      setInterval(function () {
+        if (!dashContent.classList.contains('hidden')) {
+          loadAll();
+        }
+      }, 30000);
+
+    })();
+  </script>
+</body>
+</html>

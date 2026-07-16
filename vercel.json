@@ -1,0 +1,30 @@
+{
+  "functions": {
+    "api/index.py": {
+      "includeFiles": ["api/"],
+      "runtime": "python3.12"
+    }
+  },
+  "rewrites": [
+    { "source": "/t.js", "destination": "/t.js" },
+    { "source": "/dashboard", "destination": "/dashboard/index.html" },
+    { "source": "/dashboard/", "destination": "/dashboard/index.html" },
+    { "source": "/low-ticket-book", "destination": "/low-ticket-book.html" },
+    { "source": "/low-ticket-book/", "destination": "/low-ticket-book.html" },
+    { "source": "/api/(.*)", "destination": "/api/index.py" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.html",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex" }
+      ]
+    },
+    {
+      "source": "/t.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, immutable" }
+      ]
+    }
+  ]
+}
