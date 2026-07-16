@@ -1,13 +1,12 @@
-import { neon } from '@neondatabase/serverless';
-
-const sql = neon(process.env.DATABASE_URL);
+const { recordVisit, updateVisit, findExistingVisit } = require('./lib/db');
+const crypto = require('crypto');
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { page, visitorId, referrer, userAgent, timestamp, screenWidth, screenHeight, heartbeatSeconds } = req.body || {};
+  const { page, visitorId, referrer, userAgent, screenWidth, screenHeight, heartbeatSeconds } = req.body || {};
   if (!page || !visitorId) {
     return res.status(400).json({ error: 'page and visitorId required' });
   }
@@ -18,25 +17,32 @@ export default async function handler(req, res) {
     const ref = referrer || req.headers['referer'] || '';
 
     // Check if this visitor already has a visit for this page
-    const existing = await sql`
-      SELECT id FROM visits WHERE visitor_id = ${visitorId} AND page = ${page} LIMIT 1
-    `;
+    const existing = findExistingVisit(visitorId, page);
 
-    if (existing && existing.length > 0) {
+    if (existing) {
       // Update time on page for heartbeat
       if (heartbeatSeconds) {
-        await sql`
-          UPDATE visits SET time_on_page_seconds = GREATEST(time_on_page_seconds, ${heartbeatSeconds})
-          WHERE id = ${existing[0].id}
-        `;
+        const newTime = Math.max(existing.timeOnPageSeconds || 0, heartbeatSeconds);
+        updateVisit(visitorId, page, { timeOnPageSeconds: newTime });
       }
       return res.status(200).json({ ok: true, updated: true });
     }
 
-    await sql`
-      INSERT INTO visits (page, visitor_id, referrer, user_agent, country, screen_width, screen_height)
-      VALUES (${page}, ${visitorId}, ${ref ? ref.substring(0, 500) : ''}, ${ua ? ua.substring(0, 500) : ''}, ${country}, ${screenWidth || 0}, ${screenHeight || 0})
-    `;
+    const visit = {
+      id: crypto.randomUUID(),
+      page,
+      visitorId,
+      referrer: ref ? ref.substring(0, 500) : '',
+      userAgent: ua ? ua.substring(0, 500) : '',
+      country,
+      screenWidth: screenWidth || 0,
+      screenHeight: screenHeight || 0,
+      timeOnPageSeconds: heartbeatSeconds || 0,
+      clicked: false,
+      createdAt: new Date().toISOString(),
+    };
+
+    recordVisit(visit);
     return res.status(200).json({ ok: true });
   } catch (e) {
     console.error('Track error:', e);
