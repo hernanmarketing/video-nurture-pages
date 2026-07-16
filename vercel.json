@@ -1,8 +1,6 @@
 {
   "functions": {
-    "api/index.py": {
-      "runtime": "@vercel/python@4.1.1"
-    }
+    "api/index.py": {}
   },
   "rewrites": [
     { "source": "/t.js", "destination": "/t.js" },
