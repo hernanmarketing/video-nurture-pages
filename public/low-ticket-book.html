@@ -171,78 +171,7 @@
       letter-spacing: 0.02em;
     }
 
-    /* ── Trust Row ────────────────────────────────────── */
-    .trust-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 3rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .trust-item {
-      text-align: center;
-    }
-    .trust-item .number {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #fff;
-      line-height: 1;
-    }
-    .trust-item .label {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.4);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-top: 0.25rem;
-    }
-
-    /* ── Features ─────────────────────────────────────── */
-    .features {
-      padding: 4rem 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .features h2 {
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 2.5rem;
-      color: rgba(255,255,255,0.8);
-    }
-    .features h2 em { color: #E41E1E; font-style: normal; }
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-    }
-    .feature-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: border-color 0.2s;
-    }
-    .feature-card:hover { border-color: rgba(228,30,30,0.3); }
-    .feature-card .icon {
-      font-size: 1.5rem;
-      margin-bottom: 0.75rem;
-    }
-    .feature-card h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      color: #fff;
-    }
-    .feature-card p {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.6;
-    }
+    /* ── Features (removed) ───────────────────────────── */
 
     /* ── Footer ───────────────────────────────────────── */
     footer {
@@ -265,8 +194,7 @@
         padding: 0.9rem 1.5rem;
         font-size: 1rem;
       }
-      .trust-row { gap: 1.25rem; }
-      .feature-grid { grid-template-columns: 1fr; }
+
     }
 
     /* ── Offer Grid ────────────────────────────────── */
@@ -410,27 +338,14 @@
 
       <p class="whisper">Instant digital download &bull; No upsells &bull; 60-day guarantee</p>
 
-      <div class="trust-row">
-        <div class="trust-item">
-          <div class="number">$223K+</div>
-          <div class="label">Revenue Generated</div>
-        </div>
-        <div class="trust-item">
-          <div class="number">5,000+</div>
-          <div class="label">Copies Sold</div>
-        </div>
-        <div class="trust-item">
-          <div class="number">4.8★</div>
-          <div class="label">Average Rating</div>
-        </div>
-      </div>
+
 
     </div>
   </section>
 
   <!-- ── Offer Grid ─────────────────────────────────── -->
   <section class="offers-section">
-    <h2>Choose Your <em>Next Offer</em></h2>
+    <h2>Here Are Some Additional <em>Recommended Resources</em> For You</h2>
     <p class="section-sub">Every tool, template, and system I use to run profitable campaigns.</p>
     <div id="offer-grid"></div>
   </section>
