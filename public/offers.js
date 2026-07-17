@@ -6,28 +6,12 @@ var UTM_PARAM = '?utm_source=YouTube+Embeds&utm_medium=cta_link&utm_campaign=cta
 
 var LOW_TICKET_OFFERS = [
   {
-    id: 'rapid-launch-scale',
-    name: 'Rapid Launch And Scale Framework',
-    price: '$5',
-    url: 'https://rapidscaleframework.com/of',
-    tag: 'best-seller',
-    description: 'My simple system for launching and scaling Meta ads. The three-campaign setup I use to get profitable campaigns live in about 15 minutes.'
-  },
-  {
     id: 'rapid-scale-newsletter',
     name: 'Rapid Scale Newsletter',
     price: '$37/mo',
     url: 'https://rapidscaleframework.com/news-sp',
     tag: 'subscription',
     description: 'My monthly newsletter for advertisers, media buyers, and entrepreneurs. What\'s actually working in paid ads right now.'
-  },
-  {
-    id: 'newsletter-trial',
-    name: 'Rapid Scale Newsletter ($1 Trial)',
-    price: '$1 trial',
-    url: 'https://rapidscaleframework.com/news-spt',
-    tag: 'trial',
-    description: 'Test the newsletter for 30 days for a buck, then $37/mo. Zero risk to stick your toe in the water first.'
   },
   {
     id: 'dfy-ads',
@@ -67,40 +51,11 @@ var LOW_TICKET_OFFERS = [
     description: 'How I take one winning creative and turn it into dozens of variations to beat fatigue without starting from scratch.'
   },
   {
-    id: 'low-ticket-book',
-    name: 'Low Ticket Profits Book (Digital)',
-    price: '$4.95',
-    url: 'https://lowticketbook.com/digital-sp',
-    tag: 'best-seller',
-    description: 'How I build a daily-buyer machine with cheap front-end offers that liquidate ad spend and feed people into the back end.'
-  },
-  {
-    id: 'low-ticket-audit',
-    name: 'Low Ticket Health Audit',
-    price: '$27',
-    url: 'https://rapidscaleframework.com/audit-of',
-    description: 'A tool where you plug in your funnel numbers and it tells you exactly where your low-ticket funnel is leaking.'
-  },
-  {
     id: 'offer-validation',
     name: 'Offer Validation Workshop',
     price: '$27',
     url: 'https://rapidscaleframework.com/validate-of',
     description: 'Two ways to test whether people actually want your offer before you build a single thing.'
-  },
-  {
-    id: 'branding-blueprint',
-    name: 'Rapid Branding Blueprint',
-    price: '$7',
-    url: 'https://rapidscaleframework.com/branding-of',
-    description: 'How I run cheap branding campaigns on Meta to build a warm audience of future buyers for a few bucks each.'
-  },
-  {
-    id: 'reels-framework',
-    name: 'Rapid Reels Framework',
-    price: '$17',
-    url: 'https://rapidscaleframework.com/reels-of',
-    description: 'My framework for Reels ads that actually convert. Short-form video that sells, no studio required.'
   },
   {
     id: 'low-ticket-workshop',
@@ -115,28 +70,6 @@ var LOW_TICKET_OFFERS = [
     price: '$97',
     url: 'https://rapidscaleframework.com/bundle-sp',
     description: 'My complete advertising arsenal: Rapid Scale Framework, Rapid Creatives, Retargeting Playbook, Branding Playbook, and tracking workflow.'
-  },
-  {
-    id: 'retargeting-playbook',
-    name: 'Ultimate Retargeting Playbook',
-    price: '$7',
-    url: 'https://rapidscaleframework.com/retargeting-of',
-    description: 'My three-tier cold, warm, and hot retargeting system. The exact audience setups that drop your CPAs.'
-  },
-  {
-    id: 'tracking-crash-course',
-    name: 'Tracking and Attribution Crash Course',
-    price: '$47',
-    url: 'https://rapidscaleframework.com/tracking-of',
-    description: 'Set up real attribution in 60 minutes and recover the conversion data your pixel is missing.'
-  },
-  {
-    id: 'rapid-scale-mastery',
-    name: 'Rapid Scale Mastery',
-    price: '$397/mo',
-    url: 'https://rapidscalemastery.com/',
-    tag: 'premium',
-    description: 'My high-level Mastermind of Advertisers and Media Buyers. Weekly calls, live training, over-the-shoulder campaigns.'
   },
   {
     id: 'upsells-that-ascend',
