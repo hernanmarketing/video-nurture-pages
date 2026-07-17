@@ -2,6 +2,8 @@
  * Low-Ticket Offers Library — shared data for all video nurture pages.
  * Each offer: { id, name, price, url, description }
  */
+var UTM_PARAM = '?utm_source=YouTube+Embeds&utm_medium=cta_link&utm_campaign=cta_link';
+
 var LOW_TICKET_OFFERS = [
   {
     id: 'rapid-launch-scale',
@@ -160,7 +162,7 @@ function renderOfferGrid(containerId) {
       ? '<span class="offer-tag offer-tag--' + o.tag + '">' + o.tag + '</span>'
       : '';
     html +=
-      '<a href="' + o.url + '" class="offer-card" target="_blank" rel="noopener noreferrer" data-track="cta">' +
+      '<a href="' + o.url + (o.url.indexOf('?') === -1 ? UTM_PARAM : UTM_PARAM.replace('?', '&')) + '" class="offer-card" target="_blank" rel="noopener noreferrer" data-track="cta">' +
         '<div class="offer-card-body">' +
           '<div class="offer-card-top">' +
             '<h3 class="offer-name">' + o.name + '</h3>' +
