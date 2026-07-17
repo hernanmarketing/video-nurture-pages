@@ -4,15 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
-  <title>How I Made $223,000 With Low Ticket Offers | Hernan Vazquez</title>
-  <meta name="description" content="Watch how I built a low-ticket offer system that generated $223K — and how you can do the same with the Low Ticket Profits Book." />
+  <title>HOW TO GET FREE BUYERS WITH LOW TICKET OFFERS | Hernan Vazquez</title>
+  <meta name="description" content="Watch how to get free buyers using low ticket offers — then grab the exact templates and tools I use." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* ── Reset & Base ─────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
       background: #0a0a0a;
@@ -23,7 +22,6 @@
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
 
-    /* ── Typography ───────────────────────────────────── */
     .logo {
       font-size: 1.1rem;
       font-weight: 800;
@@ -33,7 +31,6 @@
     }
     .logo em { color: #E41E1E; font-style: normal; }
 
-    /* ── Navigation ───────────────────────────────────── */
     nav {
       position: fixed;
       top: 0;
@@ -59,7 +56,6 @@
       nav .tagline { display: block; }
     }
 
-    /* ── Hero Section ─────────────────────────────────── */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -73,10 +69,7 @@
     .hero::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background:
         radial-gradient(ellipse 80% 50% at 50% 0%, rgba(228,30,30,0.08) 0%, transparent 70%),
         radial-gradient(ellipse 50% 60% at 80% 80%, rgba(228,30,30,0.04) 0%, transparent 70%);
@@ -91,29 +84,23 @@
       z-index: 1;
     }
 
-    /* ── Video Embed ──────────────────────────────────── */
     .video-wrapper {
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%; /* 16:9 */
+      padding-bottom: 56.25%;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.06),
-        0 20px 60px rgba(0,0,0,0.6);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.6);
       margin-bottom: 2.5rem;
       background: #000;
     }
     .video-wrapper iframe {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       border: 0;
     }
 
-    /* ── Headline ─────────────────────────────────────── */
     h1 {
       font-size: clamp(1.75rem, 4.5vw, 3rem);
       font-weight: 800;
@@ -121,10 +108,7 @@
       margin-bottom: 1rem;
       letter-spacing: -0.02em;
     }
-    h1 em {
-      color: #E41E1E;
-      font-style: normal;
-    }
+    h1 em { color: #E41E1E; font-style: normal; }
 
     .subheadline {
       font-size: clamp(1rem, 2vw, 1.2rem);
@@ -135,43 +119,13 @@
       line-height: 1.7;
     }
 
-    /* ── CTA Button ───────────────────────────────────── */
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: #E41E1E;
-      color: #fff;
-      font-family: inherit;
-      font-size: 1.1rem;
-      font-weight: 700;
-      padding: 1rem 2.5rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-      letter-spacing: 0.01em;
-      box-shadow: 0 4px 20px rgba(228,30,30,0.35);
+    .subheadline a {
+      color: #E41E1E;
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
-    .cta-btn:hover {
-      background: #c41a1a;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 28px rgba(228,30,30,0.45);
-    }
-    .cta-btn:active {
-      transform: translateY(0);
-    }
+    .subheadline a:hover { color: #ff3a3a; }
 
-    /* ── Whisper text ─────────────────────────────────── */
-    .whisper {
-      margin-top: 0.75rem;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.02em;
-    }
-
-    /* ── Trust Row ────────────────────────────────────── */
     .trust-row {
       display: flex;
       flex-wrap: wrap;
@@ -184,9 +138,7 @@
       margin-left: auto;
       margin-right: auto;
     }
-    .trust-item {
-      text-align: center;
-    }
+    .trust-item { text-align: center; }
     .trust-item .number {
       font-size: 1.5rem;
       font-weight: 800;
@@ -201,75 +153,7 @@
       margin-top: 0.25rem;
     }
 
-    /* ── Features ─────────────────────────────────────── */
-    .features {
-      padding: 4rem 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .features h2 {
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 2.5rem;
-      color: rgba(255,255,255,0.8);
-    }
-    .features h2 em { color: #E41E1E; font-style: normal; }
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-    }
-    .feature-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: border-color 0.2s;
-    }
-    .feature-card:hover { border-color: rgba(228,30,30,0.3); }
-    .feature-card .icon {
-      font-size: 1.5rem;
-      margin-bottom: 0.75rem;
-    }
-    .feature-card h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      color: #fff;
-    }
-    .feature-card p {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.6;
-    }
-
-    /* ── Footer ───────────────────────────────────────── */
-    footer {
-      text-align: center;
-      padding: 2rem 1.5rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    footer p {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.3);
-    }
-
-    /* ── Responsive ───────────────────────────────────── */
-    @media (max-width: 600px) {
-      .hero { padding: 5rem 1rem 3rem; }
-      h1 { font-size: 1.5rem; }
-      .cta-btn {
-        width: 100%;
-        justify-content: center;
-        padding: 0.9rem 1.5rem;
-        font-size: 1rem;
-      }
-      .trust-row { gap: 1.25rem; }
-      .feature-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ── Offer Grid ────────────────────────────────── */
+    /* ── Offer Grid Section ────────────────────────── */
     .offers-section {
       padding: 4rem 1.5rem 5rem;
       max-width: 1100px;
@@ -289,6 +173,7 @@
       color: rgba(255,255,255,0.45);
       margin-bottom: 3rem;
     }
+
     .offer-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -340,6 +225,7 @@
     .offer-tag--subscription { background: rgba(0,150,255,0.12); color: #4fc3ff; }
     .offer-tag--trial { background: rgba(0,200,100,0.12); color: #4cdf8b; }
     .offer-tag--premium { background: rgba(180,100,255,0.12); color: #c084fc; }
+
     .offer-desc {
       font-size: 0.8rem;
       color: rgba(255,255,255,0.5);
@@ -367,80 +253,78 @@
     .offer-card:hover .offer-arrow {
       transform: translateX(3px);
     }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    footer p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 5rem 1rem 3rem; }
+      h1 { font-size: 1.5rem; }
+      .trust-row { gap: 1.25rem; }
+      .offer-grid { grid-template-columns: 1fr; }
+      .offers-section { padding: 3rem 1rem 4rem; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- ── Navigation ──────────────────────────────────── -->
   <nav>
     <div class="logo">Hernan <em>Vazquez</em></div>
     <div class="tagline">Scale Driven</div>
   </nav>
 
-  <!-- ── Hero ────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-content">
-
       <div class="video-wrapper">
         <iframe
-          src="https://www.youtube.com/embed/18CpZ8rq3SE?autoplay=1&rel=0"
-          title="How I Made $223,000 With Low Ticket Offers"
+          src="https://www.youtube.com/embed/UP0MinXn-dE?autoplay=1&rel=0"
+          title="HOW TO GET FREE BUYERS WITH LOW TICKET OFFERS"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen
           loading="lazy"
         ></iframe>
       </div>
 
-      <h1>How I Made <em>$223,000</em> With Low Ticket Offers</h1>
+      <h1>How To Get <em>Free Buyers</em> With Low Ticket Offers</h1>
 
       <p class="subheadline">
-        Discover the exact low-ticket system that generated over $223K — no complicated funnels, no high-ticket sales pressure. Just a repeatable offer that prints profits.
+        Low ticket offers can actually acquire customers at zero ad cost — the strategy is simpler than you think. Watch the breakdown — then grab the exact offer that fits what you need to build right now.
       </p>
-
-      <a
-        href="https://lowticketbook.com/digital?utm_source=YouTube+Embeds&utm_medium=cta_link&utm_campaign=cta_link"
-        class="cta-btn"
-        data-track="cta"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Get The Low Ticket Profits Book
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
-
-      <p class="whisper">Instant digital download &bull; No upsells &bull; 60-day guarantee</p>
 
       <div class="trust-row">
         <div class="trust-item">
-          <div class="number">$223K+</div>
-          <div class="label">Revenue Generated</div>
+          <div class="number">$4.5M+</div>
+          <div class="label">Annual Ad Spend</div>
         </div>
         <div class="trust-item">
-          <div class="number">5,000+</div>
-          <div class="label">Copies Sold</div>
+          <div class="number">10K+</div>
+          <div class="label">Customers Served</div>
         </div>
         <div class="trust-item">
-          <div class="number">4.8★</div>
-          <div class="label">Average Rating</div>
+          <div class="number">5+ Years</div>
+          <div class="label">Running Paid Ads</div>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- ── Offer Grid ─────────────────────────────────── -->
   <section class="offers-section">
     <h2>Choose Your <em>Next Offer</em></h2>
     <p class="section-sub">Every tool, template, and system I use to run profitable campaigns.</p>
     <div id="offer-grid"></div>
   </section>
 
-  <!-- ── Footer ──────────────────────────────────────── -->
   <footer>
     <p>&copy; 2024 Hernan Vazquez &middot; Scale Driven &middot; All Rights Reserved</p>
   </footer>
 
-  <!-- ── Tracking Beacon ─────────────────────────────── -->
   <script defer src="/offers.js"></script>
   <script defer src="/t.js"></script>
   <script>
@@ -450,6 +334,5 @@
       }
     });
   </script>
-
 </body>
 </html>
